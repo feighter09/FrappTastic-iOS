@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FTAnnouncementsViewController : UIViewController
+@interface FTAnnouncementsViewController : UIViewController <UIWebViewDelegate>
 
 @end

@@ -8,12 +8,16 @@
 
 #import "FTAnnouncements.h"
 
+static NSString *kFrapptasticBaseUrl = @"http://www.triangleumich.com/";
+
 @implementation FTAnnouncements
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+	NSURL *url = [NSURL URLWithString:kFrapptasticBaseUrl];
+		[self loadHTMLString:@"announcements.php" baseURL:url];
         // Initialization code
     }
     return self;

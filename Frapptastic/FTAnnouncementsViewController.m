@@ -9,30 +9,45 @@
 #import "FTAnnouncementsViewController.h"
 
 @interface FTAnnouncementsViewController ()
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *progress;
 
 @end
 
 @implementation FTAnnouncementsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+	self.webView.delegate = self;
+	
+	self.webView.scalesPageToFit = YES;
+	
+	NSURL *url = [NSURL URLWithString:@"http://www.triangleumich.com/announcements.php"];
+	NSURLRequest *request = [NSURLRequest requestWithURL:url];
+	[self.webView loadRequest:request];
+	[self showProgress];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+	[self hideProgress];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showProgress {
+	[self.progress setHidden:NO];
+	[self.progress setHidesWhenStopped:YES];
+	[self.progress startAnimating];
+}
+
+- (void)hideProgress {
+	[self.progress stopAnimating];
 }
 
 @end
