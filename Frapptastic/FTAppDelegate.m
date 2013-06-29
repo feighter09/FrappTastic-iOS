@@ -8,12 +8,14 @@
 
 #import "FTAppDelegate.h"
 
+#import <NewRelicAgent/NewRelicAgent.h>
+
 @implementation FTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    return YES;
+	[NewRelicAgent startWithApplicationToken:@"AAc0595fb561f92f2d9cb610e7ed4b6faff51a8607"];
+  return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

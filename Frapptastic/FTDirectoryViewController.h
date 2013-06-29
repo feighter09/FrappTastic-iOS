@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Foundation/Foundation.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface FTDirectoryViewController : UITableViewController
+@interface FTDirectoryViewController : UITableViewController <ABNewPersonViewControllerDelegate>
 
 @end

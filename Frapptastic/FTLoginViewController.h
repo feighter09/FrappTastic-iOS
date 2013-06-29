@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FTViewController : UIViewController
+@interface FTLoginViewController : UIViewController <UITextFieldDelegate>
 
 @end
