@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FTQuickEventViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
+@interface FTQuickEventViewController : UIViewController
 
 @property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong, nonatomic) UIActionSheet *pickerPopup;

@@ -11,20 +11,28 @@
 #import "AFJSONRequestOperation.h"
 #import "FTUtilityMethods.h"
 
+enum ButtonIndexes {
+	CALL = 1,
+	SEND_TEXT_MESSAGE = 2,
+	ADD_CONTACT = 3
+	};
+
 @interface FTDirectoryViewController ()
 
 @property (strong, nonatomic) NSArray *contacts;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *progressCircle;
+@property (strong, nonatomic) NSDictionary *selectedContact;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *progressCircle;
 
 @end
 
 @implementation FTDirectoryViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-	self = [super initWithStyle:style];
-	if (self)
-		_contacts = [[NSArray alloc] init];
+- (id)initWithStyle:(UITableViewStyle)style {
+
+	if (self = [super initWithStyle:style]) {
+		self.contacts = [[NSArray alloc] init];
+		self.selectedContact = [[NSDictionary alloc] init];
+	}
 	
 	return self;
 }
@@ -112,28 +120,53 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
-	picker.newPersonViewDelegate = self;
-	
-	ABRecordRef newContact = ABPersonCreate();
-	CFErrorRef error;
-	NSDictionary *contact = [_contacts objectAtIndex:indexPath.row];
-	ABRecordSetValue(newContact, kABPersonFirstNameProperty, (__bridge CFTypeRef)[contact objectForKey:@"first"], &error);
-	ABRecordSetValue(newContact, kABPersonLastNameProperty, (__bridge CFTypeRef)[contact objectForKey:@"last"], &error);
-	
-	ABMutableMultiValueRef phoneInfo = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-	ABMultiValueAddValueAndLabel(phoneInfo, (__bridge CFTypeRef)[contact objectForKey:@"phone"], kABPersonPhoneMobileLabel, NULL);
-	ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneInfo, nil);
+	[self setSelectedContact:[self.contacts objectAtIndex:indexPath.row]];
+	[self showSelectedCellMenu];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
-	ABMutableMultiValueRef emailInfo = ABMultiValueCreateMutable(kABPersonEmailProperty);
-	ABMultiValueAddValueAndLabel(emailInfo, (__bridge CFTypeRef)[[contact objectForKey:@"email"] stringByAppendingString:@"@umich.edu"], kABWorkLabel, NULL);
-	ABRecordSetValue(newContact, kABPersonEmailProperty, emailInfo, nil);
+- (void)showSelectedCellMenu {
 	
-	picker.displayedPerson = newContact;
+	UIAlertView *menu = [[UIAlertView alloc] initWithTitle:@"What would you like to do?"
+												   message:nil
+												  delegate:self
+										 cancelButtonTitle:@"Cancel"
+										 otherButtonTitles:@"Call", @"Send Text Message", @"Add to Contacts", nil];
+	[menu show];
+}
+
+- (void)alertView:alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	
-	UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
+	if (buttonIndex == CALL)
+		[self callContact];
+	else if (buttonIndex == SEND_TEXT_MESSAGE)
+		[self textContact];
+	else if	(buttonIndex == ADD_CONTACT)
+		[self showNewPersonViewController];
+	else if ([[alertView title] isEqualToString:@"Whoops!"] && buttonIndex == 1) //retry on error message
+		[self getTableInfo];
+}
+
+- (void)callContact {
 	
-	[self presentViewController:navigation animated:YES completion:nil];
+	NSLog(@"Calling contact: %@ %@, phone number: %@", [self.selectedContact objectForKey:@"first"],
+														[self.selectedContact objectForKey:@"last"],
+														[self.selectedContact objectForKey:@"phone"]);
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", [self.selectedContact objectForKey:@"phone"]]]];
+}
+
+- (void)textContact {
+	
+	if (![MFMessageComposeViewController canSendText])
+		return;
+	
+	NSLog(@"Sending text to: %@ %@, phone number: %@", [self.selectedContact objectForKey:@"first"],
+		  [self.selectedContact objectForKey:@"last"],
+		  [self.selectedContact objectForKey:@"phone"]);
+	MFMessageComposeViewController *texter = [[MFMessageComposeViewController alloc] init];
+//	[texter setDelegate:self];
+	[texter setRecipients:@[[self.selectedContact objectForKey:@"phone"]]];
+	[self presentViewController:texter animated:YES completion:nil];
 }
 
 #pragma mark - Network Calls
@@ -162,13 +195,33 @@
 	[op start];
 }
 
-- (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	
-	if ([alertView.title isEqualToString:@"Whoops!"] && buttonIndex == 1) //retry on error message
-		[self getTableInfo];
-}
-
 #pragma mark - ABNewPerson Delegation -
+
+- (void)showNewPersonViewController {
+	
+	ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
+	picker.newPersonViewDelegate = self;
+	
+	ABRecordRef newContact = ABPersonCreate();
+	CFErrorRef error;
+	NSDictionary *contact = [self selectedContact];
+	ABRecordSetValue(newContact, kABPersonFirstNameProperty, (__bridge CFTypeRef)[contact objectForKey:@"first"], &error);
+	ABRecordSetValue(newContact, kABPersonLastNameProperty, (__bridge CFTypeRef)[contact objectForKey:@"last"], &error);
+	
+	ABMutableMultiValueRef phoneInfo = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+	ABMultiValueAddValueAndLabel(phoneInfo, (__bridge CFTypeRef)[contact objectForKey:@"phone"], kABPersonPhoneMobileLabel, NULL);
+	ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneInfo, nil);
+	
+	ABMutableMultiValueRef emailInfo = ABMultiValueCreateMutable(kABPersonEmailProperty);
+	ABMultiValueAddValueAndLabel(emailInfo, (__bridge CFTypeRef)[[contact objectForKey:@"email"] stringByAppendingString:@"@umich.edu"], kABWorkLabel, NULL);
+	ABRecordSetValue(newContact, kABPersonEmailProperty, emailInfo, nil);
+	
+	picker.displayedPerson = newContact;
+	
+	UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
+	
+	[self presentViewController:navigation animated:YES completion:nil];
+}
 
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person {
 	

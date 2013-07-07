@@ -16,15 +16,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTypeLabel;
 
-- (IBAction)setDateAndTime:(id)sender;
-- (IBAction)setEventType:(id)sender;
-
 @end
 
 @implementation FTQuickEventViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -32,14 +28,12 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -62,10 +56,10 @@
 
 	NSString *title = UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n";
 	UIActionSheet *pickerSheet = [[UIActionSheet alloc] initWithTitle:title
-																													 delegate:self
-																									cancelButtonTitle:@"Cancel"
-																						 destructiveButtonTitle:nil
-																									otherButtonTitles:@"Set Date and Time", nil];
+															 delegate:self
+													cancelButtonTitle:@"Cancel"
+											   destructiveButtonTitle:nil
+													otherButtonTitles:@"Set Date and Time", nil];
 	UIDatePicker *datePicker = [[UIDatePicker alloc] init];
 	[datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
 	[datePicker setTag:kPickerTag];

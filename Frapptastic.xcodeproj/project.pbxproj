@@ -32,6 +32,9 @@
 		D99DF07D1753C86A00AAF154 /* FTAnnouncements.m in Sources */ = {isa = PBXBuildFile; fileRef = D99DF07C1753C86A00AAF154 /* FTAnnouncements.m */; };
 		D99DF0811753CB5100AAF154 /* FTAnnouncementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99DF0801753CB5100AAF154 /* FTAnnouncementsViewController.m */; };
 		D99DF0871753EAE000AAF154 /* FTDirectoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99DF0861753EAE000AAF154 /* FTDirectoryViewController.m */; };
+		D9F6D5B91788C07100FEDB57 /* FTQuickEventsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6D5B81788C07100FEDB57 /* FTQuickEventsListViewController.m */; };
+		D9F6D5BC1788C18A00FEDB57 /* FTNetworkCalls.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6D5BB1788C18A00FEDB57 /* FTNetworkCalls.m */; };
+		D9F6D5BE17890D8000FEDB57 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F6D5BD17890D7F00FEDB57 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +76,11 @@
 		D99DF0801753CB5100AAF154 /* FTAnnouncementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTAnnouncementsViewController.m; sourceTree = "<group>"; };
 		D99DF0851753EAE000AAF154 /* FTDirectoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDirectoryViewController.h; sourceTree = "<group>"; };
 		D99DF0861753EAE000AAF154 /* FTDirectoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTDirectoryViewController.m; sourceTree = "<group>"; };
+		D9F6D5B71788C07100FEDB57 /* FTQuickEventsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTQuickEventsListViewController.h; sourceTree = "<group>"; };
+		D9F6D5B81788C07100FEDB57 /* FTQuickEventsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTQuickEventsListViewController.m; sourceTree = "<group>"; };
+		D9F6D5BA1788C18A00FEDB57 /* FTNetworkCalls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTNetworkCalls.h; sourceTree = "<group>"; };
+		D9F6D5BB1788C18A00FEDB57 /* FTNetworkCalls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTNetworkCalls.m; sourceTree = "<group>"; };
+		D9F6D5BD17890D7F00FEDB57 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9F6D5BE17890D8000FEDB57 /* MessageUI.framework in Frameworks */,
 				7A9EE6EB176FE1AE000DD435 /* libz.dylib in Frameworks */,
 				7A9EE6E9176FE1A5000DD435 /* SystemConfiguration.framework in Frameworks */,
 				7A9EE6E7176FE19C000DD435 /* CoreTelephony.framework in Frameworks */,
@@ -103,6 +112,8 @@
 				7AEBDC7C1766BC5D003E0728 /* FTUtilityMethods.m */,
 				7A9DFFAC176D66AD00470207 /* FTPersistence.h */,
 				7A9DFFAD176D66AD00470207 /* FTPersistence.m */,
+				D9F6D5BA1788C18A00FEDB57 /* FTNetworkCalls.h */,
+				D9F6D5BB1788C18A00FEDB57 /* FTNetworkCalls.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -110,6 +121,7 @@
 		D99DF04C1753C67000AAF154 = {
 			isa = PBXGroup;
 			children = (
+				D9F6D5BD17890D7F00FEDB57 /* MessageUI.framework */,
 				7A9EE6EA176FE1AE000DD435 /* libz.dylib */,
 				7A9EE6E8176FE1A5000DD435 /* SystemConfiguration.framework */,
 				7A9EE6E6176FE19C000DD435 /* CoreTelephony.framework */,
@@ -159,6 +171,8 @@
 				7A9DFFB0176D7E7F00470207 /* FTQuickEventViewController.m */,
 				7A9CEEB3176E4569005B7B7C /* FTMainMenuViewController.h */,
 				7A9CEEB4176E4569005B7B7C /* FTMainMenuViewController.m */,
+				D9F6D5B71788C07100FEDB57 /* FTQuickEventsListViewController.h */,
+				D9F6D5B81788C07100FEDB57 /* FTQuickEventsListViewController.m */,
 			);
 			path = Frapptastic;
 			sourceTree = "<group>";
@@ -298,6 +312,8 @@
 				7A9DFFAE176D66AD00470207 /* FTPersistence.m in Sources */,
 				7A9DFFB1176D7E7F00470207 /* FTQuickEventViewController.m in Sources */,
 				7A9CEEB5176E4569005B7B7C /* FTMainMenuViewController.m in Sources */,
+				D9F6D5B91788C07100FEDB57 /* FTQuickEventsListViewController.m in Sources */,
+				D9F6D5BC1788C18A00FEDB57 /* FTNetworkCalls.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

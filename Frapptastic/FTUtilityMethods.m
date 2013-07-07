@@ -13,20 +13,20 @@
 + (void)showAlert:(NSString *)title withMessage:(NSString *)message andDelegate:(id)delegate {
 
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-																									message:message
-																								 delegate:delegate
-																				cancelButtonTitle:@"Cancel"
-																				otherButtonTitles:nil];
+													message:message
+												   delegate:delegate
+										  cancelButtonTitle:@"Cancel"
+										  otherButtonTitles:nil];
 	[alert show];
 }
 
 + (void)raiseError:(NSString*)message withDelegate:(id)delegate {
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops!"
-																									message:message
-																								 delegate:delegate
-																				cancelButtonTitle:@"Cancel"
-																				otherButtonTitles:@"Retry", nil];
+													message:message
+												   delegate:delegate
+										  cancelButtonTitle:@"Cancel"
+										  otherButtonTitles:@"Retry", nil];
 	[alert show];
 }
 

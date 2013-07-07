@@ -10,7 +10,8 @@
 #import "Foundation/Foundation.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <MessageUI/MFMessageComposeViewController.h>
 
-@interface FTDirectoryViewController : UITableViewController <ABNewPersonViewControllerDelegate>
+@interface FTDirectoryViewController : UITableViewController <ABNewPersonViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @end
